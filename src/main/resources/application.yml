@@ -1,0 +1,50 @@
+
+server.port: ${PORT:0}
+
+spring:
+  pulsar:
+    producer:
+      cache:
+        expire-after-access: 10s
+demo-topic-name: "persistent://public/default/sps-gae-demo-topic"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "datastax"
+  pulsar:
+    client:
+      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.AuthenticationToken
+      authentication:
+        token: <auth-token>
+      service-url: <service-url>
+    administration:
+      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.AuthenticationToken
+      authentication:
+        token: <auth-token>
+      service-url: <service-url>
+
+demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-demo-topic"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "streamnative"
+  pulsar:
+    client:
+      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.oauth2.AuthenticationOAuth2
+      authentication:
+        issuer-url: <issuer-url>
+        private-key: <private-key>
+        audience: <audience>
+      service-url: <service-url>
+    administration:
+      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.oauth2.AuthenticationOAuth2
+      authentication:
+        issuer-url: <issuer-url>
+        private-key: <private-key>
+        audience: <audience>
+      service-url: <admin service-url>
+demo-topic-name: "persistent://<tenant>/<namespace>/<topic>"

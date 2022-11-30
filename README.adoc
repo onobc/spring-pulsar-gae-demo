@@ -1,0 +1,89 @@
+= Spring Pulsar GAE Demo
+
+A Spring Pulsar demo app that is configured for easy deployment into Google App Engine.
+Serves as a basic longevity test by continually sending and receiving messages to and from an Apache Pulsar cluster.
+
+== Components.
+1. Basic producer using `PulsarTemplate`
+2. Basic consumer using `PulsarListener`
+
+== Building
+Check out this repository and run the following command:
+----
+./mvnw clean package
+----
+
+== Running
+
+First decide which Pulsar service you will run against and then configure the app accordingly.
+
+=== Local Pulsar
+To run against a local instance of Pulsar do the following:
+
+- Ensure that you have Pulsar running locally (`localhost:6650`)
+- Run the app locally by executing the following command:
+
+    ./mvnw spring-boot:run
+
+=== Datastax Astra Streaming
+To prepare to run against a Pulsar service provided by Datastax Astra Streaming, do the following:
+
+- Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/DataStax-Astra-Streaming[DataStax Astra Streaming Wiki]
+- Enter the values obtained from the previous step into the `datastax` section of link:./src/main/resources/application.yml[application.yml]
+- You may need to adjust the `demo-topic-name` in the `datastax` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
+- Run the app locally by executing the following command:
+
+    ./mvnw spring-boot:run -Dspring-boot.run.profiles=datastax
+
+=== Stream Native Cloud
+To prepare to run against a Pulsar service provided by Stream Native Cloud, do the following:
+
+- Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/Stream-Native-Cloud[Stream Native Cloud Wiki]
+- Enter the values obtained from the previous step into the `streamnative` section of link:./src/main/resources/application.yml[application.yml]
+- You may need to adjust the `demo-topic-name` in the `streamnative` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
+- Run the app locally by executing the following command:
+
+    ./mvnw spring-boot:run -Dspring-boot.run.profiles=streamnative
+
+TIP: The `spring-boot:run` command automatically sets `add-opens` JVM args to prevent annoying exceptions on startup
+
+=== Run the app locally in IDE
+You can also run the main class within your IDE.
+Be sure to specify the appropriate profile.
+
+NOTE: Unlike the `spring-boot:run` command, you will need to manually set the `add-opens` JVM args if you want to avoid annoying exceptions on startup
+
+=== Run the app in Google App Engine
+
+First follow these pre-requisite setup steps:
+
+* Ensure you have Java 17 installed
+* Install and initialize the https://cloud.google.com/sdk/docs/install[gcloud CLI]
+* Install the gcloud component that includes the App Engine extension for Java 17 by executing `gcloud components install app-engine-java`
+* Setup your https://cloud.google.com/appengine/docs/standard/managing-projects-apps-billing[Google Cloud project] and remember the project id
+* Enable https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com[Cloud Build API]
+* Navigate to https://console.cloud.google.com/appengine/[AppEngine Dashboard] and do the following:
+** Click "Create Application"
+** Choose Region = `"us-central1"`
+** Choose Language `"Java"`
+** Choose Environment `"Standard"`
+** Click `"I'LL DO THIS LATER"`
+
+Next specify which Pulsar service you are targeting by editing the value for `"SPRING_PROFILES_ACTIVE"` in the GAE config link:./src/main/appengine/app.yaml[app.yaml] to be one of `'datastax'` or `'streamnative'`.
+
+Rebuild to pickup the above changes:
+
+    ./mvnw clean package
+
+Next login to Google Cloud:
+
+    gcloud auth login
+
+Deploy the app w/ the following command:
+
+    gcloud app deploy --project <PROJECT_ID>
+
+TIP: If you run into any issues you may find some help in the https://cloud.google.com/appengine/docs/standard/setting-up-environment?tab=java[Google App Engine guides]
+
+=== Viewing results
+If you are using DataStax Astra Streaming or Stream Native Cloud you can observe the app's activity from the provided Pulsar dashboard. Consult either the https://github.com/spring-projects-experimental/spring-pulsar/wiki/DataStax-Astra-Streaming[DataStax Astra Streaming Wiki] or the https://github.com/spring-projects-experimental/spring-pulsar/wiki/Stream-Native-Cloud[Stream Native Cloud Wiki] for instructions on accessing the dashboard.
