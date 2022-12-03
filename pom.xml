@@ -9,6 +9,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>spring-pulsar-gae-demo-imperative</module>
-<!--        <module>spring-pulsar-gae-demo-reactive</module>-->
+        <module>spring-pulsar-gae-demo-reactive</module>
     </modules>
 </project>

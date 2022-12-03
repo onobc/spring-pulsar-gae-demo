@@ -6,7 +6,7 @@ spring:
     producer:
       cache:
         expire-after-access: 10s
-demo-topic-name: "persistent://public/default/sps-gae-imperative-demo-topic"
+demo-topic-name: "persistent://public/default/sps-gae-reactive-demo-topic"
 
 ---
 spring:
@@ -24,7 +24,8 @@ spring:
       authentication:
         token: <auth-token>
       service-url: <service-url>
-demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-imperative-demo-topic"
+demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-reactive-demo-topic"
+
 
 ---
 spring:
@@ -42,4 +43,4 @@ spring:
       authentication:
         token: <auth-token>
       service-url: <service-url>
-demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-imperative-demo-topic"
+demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-reactive-demo-topic"

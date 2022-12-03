@@ -1,5 +1,7 @@
 runtime: java17
 
+service: sps-gae-app-imperative
+
 manual_scaling:
   instances: 1
 
