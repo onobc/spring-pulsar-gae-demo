@@ -4,4 +4,4 @@ manual_scaling:
   instances: 1
 
 env_variables:
-  SPRING_PROFILES_ACTIVE: 'datastax'
+  SPRING_PROFILES_ACTIVE: 'streamnative'

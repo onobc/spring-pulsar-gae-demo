@@ -1,16 +1,10 @@
-= Spring Pulsar GAE Demo
 
-A Spring Pulsar demo app that is configured for easy deployment into Google App Engine.
-Serves as a basic longevity test by continually sending and receiving messages to and from an Apache Pulsar cluster.
-
-== Components.
-1. Basic producer using `PulsarTemplate`
-2. Basic consumer using `PulsarListener`
+NOTE: All commands are expected to be executed from the app sub-module directory (not the repo root)
 
 == Building
-Check out this repository and run the following command:
+Run the following command:
 ----
-./mvnw clean package
+../mvnw clean package
 ----
 
 == Running
@@ -20,30 +14,31 @@ First decide which Pulsar service you will run against and then configure the ap
 === Local Pulsar
 To run against a local instance of Pulsar do the following:
 
-- Ensure that you have Pulsar running locally (`localhost:6650`)
-- Run the app locally by executing the following command:
+* Ensure that you have Pulsar running locally (`localhost:6650`)
+* Run the app locally by executing the following command:
 
-    ./mvnw spring-boot:run
+    ../mvnw spring-boot:run
 
 === Datastax Astra Streaming
 To prepare to run against a Pulsar service provided by Datastax Astra Streaming, do the following:
 
-- Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/DataStax-Astra-Streaming[DataStax Astra Streaming Wiki]
-- Enter the values obtained from the previous step into the `datastax` section of link:./src/main/resources/application.yml[application.yml]
-- You may need to adjust the `demo-topic-name` in the `datastax` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
-- Run the app locally by executing the following command:
+* Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/DataStax-Astra-Streaming[DataStax Astra Streaming Wiki]
+* Enter the values obtained from the previous step into the `datastax` section of link:./src/main/resources/application.yml[application.yml]
+* You may need to adjust the `demo-topic-name` in the `datastax` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
+* Run the app locally by executing the following command:
 
-    ./mvnw spring-boot:run -Dspring-boot.run.profiles=datastax
+    ../mvnw spring-boot:run -Dspring-boot.run.profiles=datastax
 
 === Stream Native Cloud
 To prepare to run against a Pulsar service provided by Stream Native Cloud, do the following:
 
-- Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/Stream-Native-Cloud[Stream Native Cloud Wiki]
-- Enter the values obtained from the previous step into the `streamnative` section of link:./src/main/resources/application.yml[application.yml]
-- You may need to adjust the `demo-topic-name` in the `streamnative` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
-- Run the app locally by executing the following command:
+* Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/Stream-Native-Cloud[Stream Native Cloud Wiki].
+** TIP: `gcloud` cloud provider in `us-central1` region works well
+* Enter the values obtained from the previous step into the `streamnative` section of link:./src/main/resources/application.yml[application.yml]
+* You may need to adjust the `demo-topic-name` in the `streamnative` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
+* Run the app locally by executing the following command:
 
-    ./mvnw spring-boot:run -Dspring-boot.run.profiles=streamnative
+    ../mvnw spring-boot:run -Dspring-boot.run.profiles=streamnative
 
 TIP: The `spring-boot:run` command automatically sets `add-opens` JVM args to prevent annoying exceptions on startup
 
@@ -73,7 +68,7 @@ Next specify which Pulsar service you are targeting by editing the value for `"S
 
 Rebuild to pickup the above changes:
 
-    ./mvnw clean package
+    ../mvnw clean package
 
 Next login to Google Cloud:
 
@@ -82,6 +77,17 @@ Next login to Google Cloud:
 Deploy the app w/ the following command:
 
     gcloud app deploy --project <PROJECT_ID>
+
+View the app logs:
+
+    gcloud app logs tail
+
+A healthy app will have entries similar to the following:
+
+    LongevityDemoApplication$$SpringCGLIB$$0 : *** Sent Hello_50
+    LongevityDemoApplication$$SpringCGLIB$$0 : *** Received Hello_50
+    LongevityDemoApplication$$SpringCGLIB$$0 : *** Sent Hello_55
+    LongevityDemoApplication$$SpringCGLIB$$0 : *** Received Hello_55
 
 TIP: If you run into any issues you may find some help in the https://cloud.google.com/appengine/docs/standard/setting-up-environment?tab=java[Google App Engine guides]
 

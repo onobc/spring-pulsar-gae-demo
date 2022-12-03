@@ -24,8 +24,8 @@ spring:
       authentication:
         token: <auth-token>
       service-url: <service-url>
-
 demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-demo-topic"
+
 
 ---
 spring:
@@ -34,17 +34,13 @@ spring:
       on-profile: "streamnative"
   pulsar:
     client:
-      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.oauth2.AuthenticationOAuth2
+      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.AuthenticationToken
       authentication:
-        issuer-url: <issuer-url>
-        private-key: <private-key>
-        audience: <audience>
+        token: <auth-token>
       service-url: <service-url>
     administration:
-      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.oauth2.AuthenticationOAuth2
+      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.AuthenticationToken
       authentication:
-        issuer-url: <issuer-url>
-        private-key: <private-key>
-        audience: <audience>
-      service-url: <admin service-url>
-demo-topic-name: "persistent://<tenant>/<namespace>/<topic>"
+        token: <auth-token>
+      service-url: <service-url>
+demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-demo-topic"

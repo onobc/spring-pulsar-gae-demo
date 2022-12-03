@@ -1,0 +1,9 @@
+= Spring Pulsar Imperative GAE Demo
+
+A Spring for Apache Pulsar demo app that:
+
+* uses the imperative flavored API
+* is configured for easy deployment into Google App Engine
+* serves as a basic longevity test by continually sending and receiving messages to and from an Apache Pulsar cluster.
+
+include::../docs/shared-instructions.adoc[]
