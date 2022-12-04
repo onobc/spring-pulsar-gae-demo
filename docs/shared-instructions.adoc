@@ -28,7 +28,7 @@ To prepare to run against a Pulsar service provided by Datastax Astra Streaming,
 
 * Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/DataStax-Astra-Streaming[DataStax Astra Streaming Wiki]
 * Update the fields prefixed with `"DATASTAX_"` in the link:../env/.cloudenv.yaml[.cloudenv.yaml] using the values obtained from the previous step
-* You **may** need to adjust the `demo-topic-name` in the `datastax` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
+* You **may** need to adjust the `demo.topic-name` in the `datastax` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
 * Run the app locally (pointing at the Datastax cloud-based Pulsar service) by executing the following command:
 
     ../mvnw spring-boot:run -Dspring-boot.run.profiles=datastax
@@ -43,7 +43,7 @@ To prepare to run against a Pulsar service provided by Stream Native Cloud, do t
 * Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/Stream-Native-Cloud[Stream Native Cloud Wiki].
 ** TIP: `gcloud` cloud provider in `us-central1` region works well
 * Update the fields prefixed with `"STREAM_NATIVE_"` in the link:../env/.cloudenv.yaml[.cloudenv.yaml] using the values obtained from the previous step
-* You **may** need to adjust the `demo-topic-name` in the `streamnative` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
+* You **may** need to adjust the `demo.topic-name` in the `streamnative` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
 * Run the app locally (pointing at the StreamNative cloud-based Pulsar service)  by executing the following command:
 
     ../mvnw spring-boot:run -Dspring-boot.run.profiles=streamnative

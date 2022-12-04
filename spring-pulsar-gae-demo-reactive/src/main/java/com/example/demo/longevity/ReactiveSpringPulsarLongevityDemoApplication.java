@@ -1,11 +1,13 @@
 package com.example.demo.longevity;
 
+import java.time.Instant;
 import org.apache.pulsar.client.api.SubscriptionInitialPosition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.pulsar.reactive.config.annotation.ReactivePulsarListener;
@@ -18,19 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
+@ConfigurationPropertiesScan("com.example.demo")
 @EnableScheduling
 @RestController
 public class ReactiveSpringPulsarLongevityDemoApplication {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final String topic;
     private final ReactivePulsarTemplate<String> pulsarTemplate;
+    private final DemoProperties demoProperties;
     private long sendCounter = 0L;
 
-    public ReactiveSpringPulsarLongevityDemoApplication(@Value("${demo-topic-name}") String topic,
-                                                        ReactivePulsarTemplate<String> pulsarTemplate) {
-        this.topic = topic;
+    public ReactiveSpringPulsarLongevityDemoApplication(ReactivePulsarTemplate<String> pulsarTemplate, DemoProperties demoProperties) {
         this.pulsarTemplate = pulsarTemplate;
+        this.demoProperties = demoProperties;
     }
 
     public static void main(String[] args) {
@@ -39,13 +41,13 @@ public class ReactiveSpringPulsarLongevityDemoApplication {
 
     @GetMapping("/")
     String hello() {
-        return "Hello";
+        return "Hello @ " + Instant.now();
     }
 
-    @Scheduled(initialDelay = 10_000, fixedDelay = 1_000)
+    @Scheduled(initialDelay = 5_000, fixedDelay = 1_000)
     void sendMessage() {
         String msg =  "Hello_" + sendCounter;
-        pulsarTemplate.send(topic, msg).subscribe();
+        pulsarTemplate.send(this.demoProperties.topicName(), msg).subscribe();
         if (sendCounter++ % 5 == 0) {
             this.logger.info("*** Reactive template sent {}", msg);
         }
@@ -59,7 +61,7 @@ public class ReactiveSpringPulsarLongevityDemoApplication {
     }
 
     @ReactivePulsarListener(subscriptionName = "sp-gae-reactive-demo-subscription",
-            topics = "${demo-topic-name}", consumerCustomizer = "subscriptionInitialPositionEarliest")
+            topics = "${demo.topic-name}", consumerCustomizer = "subscriptionInitialPositionEarliest")
     Mono<Void> receiveMessage(String msg) {
         long count = Long.parseLong(msg.substring("Hello_".length()));
         if (count % 5 == 0) {
@@ -76,5 +78,9 @@ public class ReactiveSpringPulsarLongevityDemoApplication {
             return b -> b.subscriptionInitialPosition(SubscriptionInitialPosition.Earliest);
         }
 
+    }
+
+    @ConfigurationProperties("demo")
+    public record DemoProperties(String topicName) {
     }
 }

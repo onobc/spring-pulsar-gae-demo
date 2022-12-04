@@ -3,12 +3,14 @@ server.port: ${PORT:0}
 
 spring:
   config:
-    import: optional:file:../env/.cloudenv.yaml
+    import:
+      - optional:file:./env/.cloudenv.yaml
+      - optional:file:../env/.cloudenv.yaml
   pulsar:
     producer:
       cache:
         expire-after-access: 10s
-demo-topic-name: "persistent://public/default/sps-gae-reactive-demo-topic"
+demo.topic-name: "persistent://public/default/sps-gae-reactive-demo-topic"
 
 ---
 spring:
@@ -26,7 +28,7 @@ spring:
       authentication:
         token: ${DATASTAX_AUTH_TOKEN:<auth-token-goes-here>}
       service-url: ${DATASTAX_ADMIN_URL:<admin-service-url-goes-here>}
-demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-reactive-demo-topic"
+demo.topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-reactive-demo-topic"
 
 ---
 spring:
@@ -44,4 +46,4 @@ spring:
       authentication:
         token: ${STREAM_NATIVE_AUTH_TOKEN:<auth-token-goes-here>}
       service-url: ${STREAM_NATIVE_ADMIN_URL:<admin-service-url-goes-here>}
-demo-topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-reactive-demo-topic"
+demo.topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-reactive-demo-topic"
