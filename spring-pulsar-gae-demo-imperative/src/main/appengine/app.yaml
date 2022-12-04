@@ -5,5 +5,5 @@ service: sps-gae-app-imperative
 manual_scaling:
   instances: 1
 
-env_variables:
-  SPRING_PROFILES_ACTIVE: 'streamnative'
+includes:
+  - ../env/.cloudenv-gae.yaml

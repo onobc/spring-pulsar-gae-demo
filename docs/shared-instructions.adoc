@@ -22,21 +22,29 @@ To run against a local instance of Pulsar do the following:
 === Datastax Astra Streaming
 To prepare to run against a Pulsar service provided by Datastax Astra Streaming, do the following:
 
+* **Note** that we create a local file to hold cloud coordinates. This file is not checked into Git nor uploaded to GAE. Ensure you have a local copy by executing the following command:
+
+    cp -n ../env/.cloudenv.yaml.template ../env/.cloudenv.yaml
+
 * Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/DataStax-Astra-Streaming[DataStax Astra Streaming Wiki]
-* Enter the values obtained from the previous step into the `datastax` section of link:./src/main/resources/application.yml[application.yml]
-* You may need to adjust the `demo-topic-name` in the `datastax` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
-* Run the app locally by executing the following command:
+* Update the fields prefixed with `"DATASTAX_"` in the link:../env/.cloudenv.yaml[.cloudenv.yaml] using the values obtained from the previous step
+* You **may** need to adjust the `demo-topic-name` in the `datastax` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
+* Run the app locally (pointing at the Datastax cloud-based Pulsar service) by executing the following command:
 
     ../mvnw spring-boot:run -Dspring-boot.run.profiles=datastax
 
 === Stream Native Cloud
 To prepare to run against a Pulsar service provided by Stream Native Cloud, do the following:
 
+* **Note** that we create a local file to hold cloud coordinates. This file is not checked into Git nor uploaded to GAE. If you have not already done so, make a local copy by executing the following command:
+
+    cp -n ../env/.cloudenv.yaml.template ../env/.cloudenv.yaml
+
 * Follow the steps in the https://github.com/spring-projects-experimental/spring-pulsar/wiki/Stream-Native-Cloud[Stream Native Cloud Wiki].
 ** TIP: `gcloud` cloud provider in `us-central1` region works well
-* Enter the values obtained from the previous step into the `streamnative` section of link:./src/main/resources/application.yml[application.yml]
-* You may need to adjust the `demo-topic-name` in the `streamnative` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
-* Run the app locally by executing the following command:
+* Update the fields prefixed with `"STREAM_NATIVE_"` in the link:../env/.cloudenv.yaml[.cloudenv.yaml] using the values obtained from the previous step
+* You **may** need to adjust the `demo-topic-name` in the `streamnative` section of link:./src/main/resources/application.yml[application.yml] in order to match your tenant and namespace
+* Run the app locally (pointing at the StreamNative cloud-based Pulsar service)  by executing the following command:
 
     ../mvnw spring-boot:run -Dspring-boot.run.profiles=streamnative
 
@@ -64,7 +72,16 @@ First follow these pre-requisite setup steps:
 ** Choose Environment `"Standard"`
 ** Click `"I'LL DO THIS LATER"`
 
-Next specify which Pulsar service you are targeting by editing the value for `"SPRING_PROFILES_ACTIVE"` in the GAE config link:./src/main/appengine/app.yaml[app.yaml] to be one of `'datastax'` or `'streamnative'`.
+Next specify which Pulsar service you are targeting by executing one of the following commands:
+
+.Datastax
+----
+../env/gae-use-datastax.sh
+----
+.StreamNative
+----
+../env/gae-use-streamnative.sh
+----
 
 Rebuild to pickup the above changes:
 

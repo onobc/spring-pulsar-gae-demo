@@ -5,5 +5,5 @@ service: sps-gae-app-reactive
 manual_scaling:
   instances: 1
 
-env_variables:
-  SPRING_PROFILES_ACTIVE: 'datastax'
+includes:
+  - ../env/.cloudenv-gae.yaml

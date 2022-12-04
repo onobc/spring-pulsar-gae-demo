@@ -1,0 +1,6 @@
+DATASTAX_BROKER_URL: <broker-service-url-goes-here>
+DATASTAX_ADMIN_URL: <admin-service-url-goes-here>
+DATASTAX_AUTH_TOKEN: <auth-token-goes-here>
+STREAM_NATIVE_BROKER_URL: <broker-service-url-goes-here>
+STREAM_NATIVE_ADMIN_URL: <admin-service-url-goes-here>
+STREAM_NATIVE_AUTH_TOKEN: <auth-token-goes-here>

@@ -5,6 +5,10 @@ target/
 !**/src/test/**/target/
 **/.DS_Store
 
+### Local copy of cloud coordinates  ###
+env/.cloudenv.yaml
+env/.cloudenv-gae.yaml
+
 ### STS ###
 .apt_generated
 .classpath
