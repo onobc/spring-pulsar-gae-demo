@@ -10,7 +10,10 @@ spring:
     producer:
       cache:
         expire-after-access: 10s
-demo.topic-name: "persistent://public/default/sps-gae-reactive-demo-topic"
+demo:
+  tenant: public
+  namespace: default
+  topic-name: "persistent://${demo.tenant}/${demo.namespace}/sps-gae-reactive-demo-topic"
 
 ---
 spring:
@@ -28,7 +31,9 @@ spring:
       authentication:
         token: ${DATASTAX_AUTH_TOKEN:<auth-token-goes-here>}
       service-url: ${DATASTAX_ADMIN_URL:<admin-service-url-goes-here>}
-demo.topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-reactive-demo-topic"
+demo:
+  tenant: ${DATASTAX_TENANT:<tenant-goes-here>}
+  namespace: ${DATASTAX_NAMESPACE:<namespace-goes-here>}
 
 ---
 spring:
@@ -46,4 +51,6 @@ spring:
       authentication:
         token: ${STREAM_NATIVE_AUTH_TOKEN:<auth-token-goes-here>}
       service-url: ${STREAM_NATIVE_ADMIN_URL:<admin-service-url-goes-here>}
-demo.topic-name: "persistent://sps-tenant1/sps-ns1/sps-gae-reactive-demo-topic"
+demo:
+  tenant: ${STREAM_NATIVE_TENANT:<tenant-goes-here>}
+  namespace: ${STREAM_NATIVE_NAMESPACE:<namespace-goes-here>}

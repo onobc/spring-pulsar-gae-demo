@@ -81,6 +81,6 @@ public class ReactiveSpringPulsarLongevityDemoApplication {
     }
 
     @ConfigurationProperties("demo")
-    public record DemoProperties(String topicName) {
+    public record DemoProperties(String tenant, String namespace, String topicName) {
     }
 }
